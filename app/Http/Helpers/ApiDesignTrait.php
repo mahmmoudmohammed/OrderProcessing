@@ -18,8 +18,6 @@ trait ApiDesignTrait
 
     public function success(): JsonResponse
     {
-        //TODO:: add translation message
-
         return response()->json(['message' => 'operation successful'], Response::HTTP_OK);
     }
 
