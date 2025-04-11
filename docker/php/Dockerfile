@@ -13,7 +13,7 @@ RUN apt-get update && \
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
 RUN useradd -G www-data,root -u 1000 -d /home/laravel laravel && \
-        chown -R laravel:laravel /var/www/html
+        chown -R laravel:laravel /var/www/html /home
 
 USER laravel
 
