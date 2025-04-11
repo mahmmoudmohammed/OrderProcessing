@@ -1,0 +1,58 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: app
+    depends_on:
+      - mariadb
+    volumes:
+      - .:/var/www/html:delegated
+    networks:
+      - order_network
+
+  webserver:
+    image: nginx:1.23-alpine
+    ports:
+      - "8090:80"
+    volumes:
+      - .:/var/www/html:delegated
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - order_network
+
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - order_network
+
+  adminer:
+    image: adminer
+    ports:
+      - "9090:8080"
+    depends_on:
+      - mariadb
+    networks:
+      - order_network
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - order_network
+
+networks:
+  order_network:
+    driver: bridge
+
+volumes:
+  mariadb:
