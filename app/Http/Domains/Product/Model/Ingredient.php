@@ -20,9 +20,5 @@ class Ingredient extends Model
     {
         return $this->hasMany(MerchantIngredient::class);
     }
-    public function productIngredients(): HasMany
-    {
-        return $this->hasMany(ProductIngredient::class);
-    }
 
 }

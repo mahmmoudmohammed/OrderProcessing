@@ -5,6 +5,7 @@ namespace App\Http\Domains\User\Model;
 use App\Http\Domains\Order\Model\Order;
 use App\Http\Domains\Product\Model\Ingredient;
 use App\Http\Domains\Product\Model\MerchantIngredient;
+use App\Http\Domains\Product\Model\MerchantProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -27,5 +28,9 @@ class Merchant extends Authenticatable
     public function merchantIngredients(): HasMany
     {
         return $this->hasMany(MerchantIngredient::class);
+    }
+    public function merchantProducts(): HasMany
+    {
+        return $this->hasMany(MerchantProduct::class);
     }
 }

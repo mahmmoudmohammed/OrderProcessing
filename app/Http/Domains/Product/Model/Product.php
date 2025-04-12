@@ -12,15 +12,11 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'price',
+        'description',
     ];
 
-    protected $casts = [
-        'price' => 'decimal:2',
-    ];
-
-    public function productIngredients(): HasMany
+    public function merchantProducts(): HasMany
     {
-        return $this->hasMany(ProductIngredient::class);
+        return $this->hasMany(MerchantProduct::class);
     }
 }

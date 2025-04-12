@@ -2,28 +2,33 @@
 
 namespace App\Http\Domains\Product\Model;
 
+use App\Http\Domains\User\Model\Merchant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ProductIngredient extends Model
+class MerchantProduct extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'product_id',
-        'ingredient_id',
-        'quantity',
+        'merchant_id',
     ];
 
-    public function ingredient(): BelongsTo
+    public function merchant(): BelongsTo
     {
-        return $this->belongsTo(Ingredient::class);
+        return $this->belongsTo(Merchant::class);
     }
 
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+    public function merchantProductIngredients(): HasMany
+    {
+        return $this->hasMany(MerchantProductIngredient::class);
     }
 
 }

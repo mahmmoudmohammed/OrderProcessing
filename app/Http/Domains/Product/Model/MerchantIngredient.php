@@ -6,6 +6,7 @@ use App\Http\Domains\User\Model\Merchant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MerchantIngredient extends Model
 {
@@ -14,7 +15,8 @@ class MerchantIngredient extends Model
     protected $fillable = [
         'merchant_id',
         'ingredient_id',
-        'quantity',
+        'max_capacity',
+        'stock',
     ];
 
     public function ingredient(): BelongsTo
@@ -25,5 +27,8 @@ class MerchantIngredient extends Model
     {
         return $this->belongsTo(Merchant::class);
     }
-
+    public function merchantProductIngredients(): HasMany
+    {
+        return $this->hasMany(MerchantProductIngredient::class);
+    }
 }

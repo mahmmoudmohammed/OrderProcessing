@@ -13,7 +13,7 @@ class OrderItem extends Model
 
     protected $fillable = [
         'order_id',
-        'merchant_ingredient_id',
+        'merchant_product_id',
         'quantity',
         'price',
         'total',
@@ -37,5 +37,23 @@ class OrderItem extends Model
     public function merchantIngredient(): BelongsTo
     {
         return $this->belongsTo(MerchantIngredient::class);
+    }
+
+    public function restoreQuantities()
+    {
+        $item = $this->merchantIngredient();
+        $item->increment($this->quantity);
+
+        if($item->quantity < $item->threshold) {
+            IngredientThresholdReachedJob::dispatchSync($item);
+        }
+    }
+
+    public function decrement(int $qty)
+    {
+        $this->quantity -= max(0, $qty);
+        if($this->quantity < $item->threshold) {
+            IngredientThresholdReachedJob::dispatchSync($item);
+        }
     }
 }

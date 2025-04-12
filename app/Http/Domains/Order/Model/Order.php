@@ -41,5 +41,15 @@ class Order extends Model
     {
         return $this->belongsTo(Merchant::class);
     }
+    public static function generateSerialNumber(): string
+    {
+        return '';
+    }
+    public function restoreQuantities()
+    {
+        $this->orderItems()->each(function (OrderItem $item) {
+            $item->restoreQuantities();
+        });
+    }
 
 }
