@@ -32,7 +32,7 @@ class AuthController extends Controller
             return $this->ApiResponse(401, 'auth.failed');
         }
         return (new UserResource($admin))->additional([
-            'token' => $admin->createToken($request->ip())->accessToken,
+            'token' => $admin->createToken($request->ip())->plainTextToken,
         ]);
     }
 
