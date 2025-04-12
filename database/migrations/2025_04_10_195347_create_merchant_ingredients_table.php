@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('merchant_ingredients', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('stock')->default(0);
+            $table->Integer('max_capacity');
+
             $table->foreignId('merchant_id')->constrained()->onDelete('cascade');
             $table->foreignId('ingredient_id')->constrained()->onDelete('cascade');
             $table->unique(['merchant_id', 'ingredient_id']);
-
-            $table->unsignedInteger('quantity')->default(0);
             $table->timestamps();
         });
     }
