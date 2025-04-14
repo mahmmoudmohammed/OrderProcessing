@@ -24,3 +24,9 @@ Route::name('user.')
         Route::post('/register', [AuthController::class, 'register'])->name('register');
         Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
+
+Route::name('order.')->middleware('auth:sanctum')->group(function () {
+    Route::get('/orders', [OrderController::class, 'list'])->name('list');
+    Route::post('/orders/submit', [OrderController::class, 'store'])->name('store');
+});
+
