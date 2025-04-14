@@ -48,6 +48,7 @@ class OrderValidatorService
             if ($requiredQty > $merchantProductIngredient->merchantIngredient->stock) {
                 $this->throwValidationException("Insufficient quantity for product: " . $merchantProduct->product->name);
             }
+            //TODO:: add Extra edge cases
         }
     }
 }
