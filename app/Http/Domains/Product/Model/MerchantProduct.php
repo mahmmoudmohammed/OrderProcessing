@@ -3,6 +3,7 @@
 namespace App\Http\Domains\Product\Model;
 
 use App\Http\Domains\User\Model\Merchant;
+use Database\Factories\MerchantProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,10 @@ class MerchantProduct extends Model
     protected $casts = [
         'active' => 'boolean',
     ];
+    protected static function newFactory()
+    {
+        return MerchantProductFactory::new();
+    }
     public function merchant(): BelongsTo
     {
         return $this->belongsTo(Merchant::class);

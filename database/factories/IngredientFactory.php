@@ -13,7 +13,6 @@ class IngredientFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'sku' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{3}'),
         ];
     }
 }

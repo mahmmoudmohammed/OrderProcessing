@@ -2,6 +2,7 @@
 
 namespace App\Http\Domains\Product\Model;
 
+use Database\Factories\MerchantProductIngredientFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,10 @@ class MerchantProductIngredient extends Model
         'quantity',
     ];
 
+    protected static function newFactory()
+    {
+        return MerchantProductIngredientFactory::new();
+    }
     public function merchantProduct(): BelongsTo
     {
         return $this->belongsTo(MerchantProduct::class);
