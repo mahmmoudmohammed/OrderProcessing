@@ -19,6 +19,7 @@ class Merchant extends Authenticatable
 
     protected $fillable = [
         'name',
+        'email',
     ];
 
     public function orders()

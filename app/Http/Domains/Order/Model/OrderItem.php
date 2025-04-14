@@ -3,6 +3,7 @@
 namespace App\Http\Domains\Order\Model;
 
 use App\Http\Domains\Product\Model\MerchantIngredient;
+use App\Http\Domains\Product\Model\MerchantProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,36 +25,13 @@ class OrderItem extends Model
         'total' => 'decimal:2',
     ];
 
-    public function getTotalPriceAttribute(): float|int
-    {
-        return $this->quantity * $this->price;
-    }
-
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
-    public function merchantIngredient(): BelongsTo
+    public function merchantProduct(): BelongsTo
     {
-        return $this->belongsTo(MerchantIngredient::class);
-    }
-
-    public function restoreQuantities()
-    {
-        $item = $this->merchantIngredient();
-        $item->increment($this->quantity);
-
-        if($item->quantity < $item->threshold) {
-            IngredientThresholdReachedJob::dispatchSync($item);
-        }
-    }
-
-    public function decrement(int $qty)
-    {
-        $this->quantity -= max(0, $qty);
-        if($this->quantity < $item->threshold) {
-            IngredientThresholdReachedJob::dispatchSync($item);
-        }
+        return $this->belongsTo(MerchantProduct::class);
     }
 }

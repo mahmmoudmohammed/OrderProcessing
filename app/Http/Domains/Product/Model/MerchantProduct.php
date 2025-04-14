@@ -15,8 +15,12 @@ class MerchantProduct extends Model
     protected $fillable = [
         'product_id',
         'merchant_id',
+        'price',
+        'active'
     ];
-
+    protected $casts = [
+        'active' => 'boolean',
+    ];
     public function merchant(): BelongsTo
     {
         return $this->belongsTo(Merchant::class);

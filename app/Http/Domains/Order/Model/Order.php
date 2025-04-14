@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -27,6 +28,11 @@ class Order extends Model
         'status' => OrderStatusEnum::class,
     ];
 
+    public function orderSerialNumber(): HasOne
+    {
+        return $this->hasOne(OrderSerialNumber::class);
+    }
+
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
@@ -40,16 +46,6 @@ class Order extends Model
     public function merchant(): BelongsTo
     {
         return $this->belongsTo(Merchant::class);
-    }
-    public static function generateSerialNumber(): string
-    {
-        return '';
-    }
-    public function restoreQuantities()
-    {
-        $this->orderItems()->each(function (OrderItem $item) {
-            $item->restoreQuantities();
-        });
     }
 
 }
