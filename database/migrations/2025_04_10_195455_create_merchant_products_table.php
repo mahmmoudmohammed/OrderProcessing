@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('merchant_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('stock')->default(0);
+            $table->unsignedInteger('price');
+            $table->unsignedInteger('active')->default(true);
 
             $table->foreignId('merchant_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');

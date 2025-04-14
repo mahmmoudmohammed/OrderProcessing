@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('merchant_ingredients', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('stock')->default(0);
-            $table->Integer('max_capacity');
+            $table->Integer('max_capacity')->default(0);
+            $table->boolean('alert_sent')->default(0);
 
             $table->foreignId('merchant_id')->constrained()->onDelete('cascade');
             $table->foreignId('ingredient_id')->constrained()->onDelete('cascade');
