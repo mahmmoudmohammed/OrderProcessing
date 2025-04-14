@@ -2,18 +2,18 @@
 
 namespace App\Http\Helpers;
 
-use App\Exceptions\InternalRunTimeException;
+use App\Exceptions\InternalValidationException;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 trait ApiDesignTrait
 {
     /**
-     * @throws InternalRunTimeException
+     * @throws InternalValidationException
      */
     public function throwValidationException(string $message): void
     {
-        throw InternalRunTimeException::make($message);
+        throw InternalValidationException::make($message);
     }
 
     public function success(): JsonResponse

@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class InternalRunTimeException extends Exception
+class InternalValidationException extends Exception
 {
     public function __construct(string $message = '')
     {
