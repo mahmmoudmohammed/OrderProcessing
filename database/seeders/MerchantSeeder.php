@@ -34,6 +34,7 @@ class MerchantSeeder extends Seeder
                 'max_capacity' => 1000
             ],
         ]);
+        //Product 1
         $merchant->merchantProducts()->create([
             'product_id' => Product::where('name', 'Burger')->first()->id,
             'price' => fake()->randomFloat(min: 20, max: 1000),
@@ -47,6 +48,20 @@ class MerchantSeeder extends Seeder
             ], [
                 'merchant_ingredient_id' => MerchantIngredient::where(['ingredient_id' => $Onion, 'merchant_id' => $merchant->id])->first()->id,
                 'quantity' => 20,
+            ]]
+        );
+
+        //Product 2
+        $merchant->merchantProducts()->create([
+            'product_id' => Product::where('name', 'Fried chicken')->first()->id,
+            'price' => fake()->randomFloat(min: 20, max: 1000),
+        ])->merchantProductIngredients()->createMany(
+            [[
+                'merchant_ingredient_id' => MerchantIngredient::where(['ingredient_id' => $Beef, 'merchant_id' => $merchant->id])->first()->id,
+                'quantity' => 100,
+            ], [
+                'merchant_ingredient_id' => MerchantIngredient::where(['ingredient_id' => $Cheese, 'merchant_id' => $merchant->id])->first()->id,
+                'quantity' => 50
             ]]
         );
 
