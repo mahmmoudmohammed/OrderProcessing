@@ -15,6 +15,8 @@ use App\Http\Domains\Product\Model\MerchantProductIngredient;
 use App\Http\Domains\User\Model\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use Tests\TestCase;
 
 class OrderRepositoryTest extends TestCase
@@ -74,7 +76,7 @@ class OrderRepositoryTest extends TestCase
 
     }
 
-    /** @test */
+    #[Test] #[TestDox('Ensure that the stock threshold event is not dispatched when stock stays above threshold')]
     public function it_does_not_dispatch_threshold_event_when_stock_stays_above_threshold()
     {
         Event::fake();
@@ -89,7 +91,7 @@ class OrderRepositoryTest extends TestCase
         Event::assertNotDispatched(StockThresholdExceeded::class);
     }
 
-    /** @test */
+    #[Test] #[TestDox('Ensure that the stock threshold event is dispatched when stock drops below threshold')]
     public function it_dispatches_threshold_event_when_stock_drops_below_threshold()
     {
         Event::fake();
@@ -105,9 +107,7 @@ class OrderRepositoryTest extends TestCase
         });
     }
 
-    /** @test
-     * @testdox Ensure Repository creates unique serial number the order
-     */
+    #[Test] #[TestDox('Ensure Repository creates unique serial number the order')]
     public function it_creates_serial_number_for_order()
     {
         $orderDto = $this->createOrderDto();
@@ -119,7 +119,7 @@ class OrderRepositoryTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_an_order_with_items_and_updates_stock()
     {
         $orderDto = $this->createOrderDto();
@@ -147,7 +147,7 @@ class OrderRepositoryTest extends TestCase
     }
 
 
-    /** @test */
+    #[Test] #[TestDox('Ensurers that the stock is updated correctly when multiple products are ordered')]
     public function it_correctly_handles_multiple_products_and_ingredients()
     {
         $merchantProduct2 = MerchantProduct::factory()->create([
@@ -197,13 +197,13 @@ class OrderRepositoryTest extends TestCase
         $merchantIngredient2->refresh();
 
         $this->assertEquals(
-            $initialStock1 - 20,
+            $initialStock1 - 20, // 2 * 10
             $this->merchantIngredient->stock,
             'First ingredient stock not updated correctly'
         );
 
         $this->assertEquals(
-            $initialStock2 - 15,
+            $initialStock2 - 15, // 3 * 5
             $merchantIngredient2->stock,
             'Second ingredient stock not updated correctly'
         );
