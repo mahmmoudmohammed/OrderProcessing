@@ -24,10 +24,6 @@ class OrderItem extends Model
         'price' => 'decimal:2',
         'total' => 'decimal:2',
     ];
-    protected static function newFactory()
-    {
-        return OrderIteFactory::new();
-    }
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
