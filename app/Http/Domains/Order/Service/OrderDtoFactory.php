@@ -51,7 +51,7 @@ class OrderDtoFactory
             $total = $price * $quantity;
 
             $items->push(new OrderItemDto(
-                merchantProductId: $merchantProduct->id,
+                merchantProduct: $merchantProduct,
                 quantity: $quantity,
                 price: $price,
                 total: $total

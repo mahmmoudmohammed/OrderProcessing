@@ -45,7 +45,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         return DB::transaction(function () use ($orderDto) {
             $order = $this->createOrder($orderDto);
             $this->attachOrderItems($orderDto, $order);
-            $this->updateIngredientStock($order);
+            $this->updateIngredientStock($orderDto);
             return $order;
         }, 3);
     }
@@ -72,7 +72,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $orderItems = $orderDto->items->map(function ($item) use ($order) {
             return [
                 'order_id' => $order->id,
-                'merchant_product_id' => $item->merchantProductId,
+                'merchant_product_id' => $item->merchantProduct->id,
                 'quantity' => $item->quantity,
                 'price' => $item->price,
                 'total' => $item->total,
@@ -82,12 +82,9 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         OrderItem::insert($orderItems);
     }
 
-    private function updateIngredientStock(Order $order): void
+    private function updateIngredientStock(OrderDto $orderDto): void
     {
-        $orderItems = OrderItem::with(['merchantProduct.merchantProductIngredients.merchantIngredient'])
-            ->where('order_id', $order->id)
-            ->get();
-        foreach ($orderItems as $orderItem) {
+        foreach ($orderDto->items as $orderItem) {
             $merchantProduct = $orderItem->merchantProduct;
             foreach ($merchantProduct->merchantProductIngredients as $mpi) {
                 $merchantIngredient =  $mpi->merchantIngredient;
