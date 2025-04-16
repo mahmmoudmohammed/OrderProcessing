@@ -85,7 +85,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     private function updateIngredientStock(Order $order): void
     {
         $orderItems = OrderItem::with(['merchantProduct.merchantProductIngredients.merchantIngredient'])
-            ->where('id', $order->id)
+            ->where('order_id', $order->id)
             ->get();
         foreach ($orderItems as $orderItem) {
             $merchantProduct = $orderItem->merchantProduct;
@@ -93,7 +93,6 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 $merchantIngredient =  $mpi->merchantIngredient;
                 $currentStock = $merchantIngredient->stock;
                 $requiredQty = $mpi->quantity * $orderItem->quantity;
-                logger('requiredQty', [$requiredQty, $mpi->quantity, $orderItem->quantity]);
 
                 $merchantIngredient->decrement('stock', $requiredQty);
                 $merchantIngredient->save();
@@ -102,9 +101,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                     $merchantIngredient
                 );
             }
-            logger('outloop', [$orderItem->quantity]);
         }
-        //dd(2);
     }
 
     private function isThresholdExceeded(int $currentStock, MerchantIngredient $merchantIngredient): bool
