@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Domains\Order\Service;
 
 use App\Http\Domains\Order\Service\OrderValidatorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
