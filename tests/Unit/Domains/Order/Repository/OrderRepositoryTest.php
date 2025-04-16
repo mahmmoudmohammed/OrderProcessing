@@ -40,7 +40,7 @@ class OrderRepositoryTest extends TestCase
     {
         $orderItemsCollection = collect([
             new OrderItemDto(
-                merchantProductId: $this->merchantProduct->id,
+                merchantProduct: $this->merchantProduct,
                 quantity: 2,
                 price: 100.0,
                 total: 200.0
@@ -168,13 +168,13 @@ class OrderRepositoryTest extends TestCase
         ]);
         $orderItemsCollection = collect([
             new OrderItemDto(
-                merchantProductId: $this->merchantProduct->id,
+                merchantProduct: $this->merchantProduct,
                 quantity: 2,
                 price: 100.0,
                 total: 200.0
             ),
             new OrderItemDto(
-                merchantProductId: $merchantProduct2->id,
+                merchantProduct: $merchantProduct2,
                 quantity: 3,
                 price: 150.0,
                 total: 450.0
