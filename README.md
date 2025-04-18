@@ -27,7 +27,7 @@ The project has a simple DB schema for ordering process follows a modular archit
 
 2. Navigate to the project directory:
     ```bash
-    cd EAV
+    cd OrderProcessing
     ```
 
 3. Thanks for `make install` which will install the required environment:
